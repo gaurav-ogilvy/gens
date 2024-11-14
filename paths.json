@@ -1,10 +1,11 @@
 {
   "mappings": [
-    "/content/aem-boilerplate/:/",
-    "/content/aem-boilerplate/configuration:/.helix/config.json",
-    "/content/aem-boilerplate/metadata:/metadata.json"
+    "/content/genting-singapore/:/",
+    "/content/genting-singapore/configuration:/.helix/config.json",
+    "/content/genting-singapore/metadata:/metadata.json"
   ],
   "includes": [
-    "/content/aem-boilerplate/"
+    "/content/genting-singapore/",
+    "/content/dam/genting-singapore/documents/"
   ]
 }
