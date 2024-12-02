@@ -8,7 +8,7 @@ export default async function decorate(block) {
     
     // Set iframe attributes
     iframe.src = "https://gentingsingapore.com/#!/en/investors/stock-information/share-quote-and-chart"; // Replace with your desired URL
-    iframe.width = 100%;
+    iframe.width = "100%";
     iframe.height = "1600";
     iframe.style.border = "1px solid #ccc";
     
