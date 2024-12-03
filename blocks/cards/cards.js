@@ -2,36 +2,37 @@ import { createOptimizedPicture } from "../../scripts/aem.js";
 import { moveInstrumentation } from "../../scripts/scripts.js";
 
 export default function decorate(block) {
+  console.log("cards", block);
   // Get the container div
-  const container = document.querySelector(".cards.block");
+  // const container = document.querySelector(".cards.block");
 
-  // Create a new <ul> element
-  const ulElement = document.createElement("ul");
+  // // Create a new <ul> element
+  // const ulElement = document.createElement("ul");
 
-  // Loop through the children of the container
-  Array.from(container.children).forEach((card) => {
-    // Create a new <li> element
-    const liElement = document.createElement("li");
+  // // Loop through the children of the container
+  // Array.from(container.children).forEach((card) => {
+  //   // Create a new <li> element
+  //   const liElement = document.createElement("li");
 
-    // Extract the picture element
-    const picture = card.querySelector("picture");
-    if (picture) {
-      liElement.appendChild(picture.cloneNode(true));
-    }
+  //   // Extract the picture element
+  //   const picture = card.querySelector("picture");
+  //   if (picture) {
+  //     liElement.appendChild(picture.cloneNode(true));
+  //   }
 
-    // Extract the content
-    const content = card.querySelector("div:nth-child(2)");
-    if (content) {
-      liElement.appendChild(content.cloneNode(true));
-    }
+  //   // Extract the content
+  //   const content = card.querySelector("div:nth-child(2)");
+  //   if (content) {
+  //     liElement.appendChild(content.cloneNode(true));
+  //   }
 
-    // Append the <li> to the <ul>
-    ulElement.appendChild(liElement);
-  });
+  //   // Append the <li> to the <ul>
+  //   ulElement.appendChild(liElement);
+  // });
 
-  // Replace the container's content with the new <ul>
-  container.innerHTML = "";
-  container.appendChild(ulElement);
+  // // Replace the container's content with the new <ul>
+  // container.innerHTML = "";
+  // container.appendChild(ulElement);
 
   /* change to ul, li */
   // const ul = document.createElement('ul');
