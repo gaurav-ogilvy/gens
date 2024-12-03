@@ -2,7 +2,7 @@ export default async function decorate(block) {
   console.log(block);
 
   // Select the container with the quote blocks
-  const quoteContainer = document.querySelectorAll(".quote-container")[0];
+  const quoteContainer = document.querySelectorAll(".quote-container")[1];
 
   // Find all anchor tags within the container
   const anchors = quoteContainer.querySelectorAll("a");
