@@ -2,7 +2,6 @@ import { createOptimizedPicture } from "../../scripts/aem.js";
 import { moveInstrumentation } from "../../scripts/scripts.js";
 
 export default function decorate(block) {
-  console.log(block);
   // Get the container div
   const container = document.querySelector(".cards.block");
 
