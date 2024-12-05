@@ -1,9 +1,39 @@
+.cards > ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(257px, 1fr));
+  grid-gap: 24px;
+}
+
+.cards > ul > li {
+  border: 1px solid #dadada;
+  background-color: var(--background-color);
+}
+
+.cards .cards-card-body {
+  margin: 16px;
+}
+
+.cards .cards-card-image {
+  line-height: 0;
+}
+
+.cards > ul > li img {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+}
+
 .carousel-container {
   position: relative;
   width: 100%;
   max-width: 1200px;
   margin: 0 auto;
   overflow: hidden;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .carousel-slides {
@@ -19,23 +49,26 @@
   width: 100%;
   background-color: var(--background-color);
   border: 1px solid #dadada;
+  box-sizing: border-box;
 }
 
 .cards-card-image {
   line-height: 0;
+  overflow: hidden;
 }
 
 .cards-card-image img {
   width: 100%;
-  aspect-ratio: 16 / 9;
+  height: auto;
   object-fit: cover;
+  border-bottom: 1px solid #dadada;
 }
 
 .cards-card-body {
   padding: 20px;
+  text-align: center;
 }
 
-/* Carousel Controls */
 .carousel-controls {
   position: absolute;
   top: 50%;
@@ -68,7 +101,6 @@
   background-color: rgba(255, 255, 255, 0.9);
 }
 
-/* Dot Indicators */
 .carousel-dots {
   position: absolute;
   bottom: 20px;
@@ -94,7 +126,6 @@
   background-color: white;
 }
 
-/* Responsive Design */
 @media (max-width: 768px) {
   .carousel-control {
     width: 32px;
@@ -107,7 +138,6 @@
   }
 }
 
-/* Optional: Add touch support for mobile */
 @media (hover: none) {
   .carousel-slides {
     cursor: grab;
