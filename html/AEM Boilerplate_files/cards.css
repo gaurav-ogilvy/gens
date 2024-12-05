@@ -1,27 +1,119 @@
-.cards > ul {
+.carousel-container {
+  position: relative;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  overflow: hidden;
+}
+
+.carousel-slides {
+  display: flex;
   list-style: none;
   margin: 0;
   padding: 0;
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(257px, 1fr));
-  grid-gap: 24px;
+  transition: transform 0.5s ease-in-out;
 }
 
-.cards > ul > li {
-  border: 1px solid #dadada;
+.carousel-slide {
+  flex: 0 0 100%;
+  width: 100%;
   background-color: var(--background-color);
+  border: 1px solid #dadada;
 }
 
-.cards .cards-card-body {
-  margin: 16px;
-}
-
-.cards .cards-card-image {
+.cards-card-image {
   line-height: 0;
 }
 
-.cards > ul > li img {
+.cards-card-image img {
   width: 100%;
-  aspect-ratio: 4 / 3;
+  aspect-ratio: 16 / 9;
   object-fit: cover;
+}
+
+.cards-card-body {
+  padding: 20px;
+}
+
+/* Carousel Controls */
+.carousel-controls {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  transform: translateY(-50%);
+  display: flex;
+  justify-content: space-between;
+  pointer-events: none;
+  padding: 0 20px;
+}
+
+.carousel-control {
+  width: 40px;
+  height: 40px;
+  border: none;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.8);
+  color: #333;
+  font-size: 20px;
+  cursor: pointer;
+  pointer-events: auto;
+  transition: background-color 0.3s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.carousel-control:hover {
+  background-color: rgba(255, 255, 255, 0.9);
+}
+
+/* Dot Indicators */
+.carousel-dots {
+  position: absolute;
+  bottom: 20px;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+}
+
+.carousel-dot {
+  width: 10px;
+  height: 10px;
+  border: none;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.5);
+  cursor: pointer;
+  padding: 0;
+  transition: background-color 0.3s;
+}
+
+.carousel-dot.active {
+  background-color: white;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .carousel-control {
+    width: 32px;
+    height: 32px;
+    font-size: 16px;
+  }
+  
+  .cards-card-body {
+    padding: 15px;
+  }
+}
+
+/* Optional: Add touch support for mobile */
+@media (hover: none) {
+  .carousel-slides {
+    cursor: grab;
+  }
+  
+  .carousel-slides:active {
+    cursor: grabbing;
+  }
 }
