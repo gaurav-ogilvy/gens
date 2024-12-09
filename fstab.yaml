@@ -1,5 +1,5 @@
 mountpoints:
   /:
-    url: "https://author-p144202-e1488374.adobeaemcloud.com/bin/franklin.delivery/ogilvy-lab/gens/main"
+    url: "https://author-p144202-e1488374.adobeaemcloud.com/bin/franklin.delivery/gaurav-ogilvy/gens/main"
     type: "markup"
     suffix: ".html"
