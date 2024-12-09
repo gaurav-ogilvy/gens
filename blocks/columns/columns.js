@@ -1,7 +1,3 @@
-/**
- * Decorates job listing columns with accessibility and interactive features
- * @param {HTMLElement} block The column block element
- */
 export default function decorateColumns(block) {
   const columns = [...block.children];
   
@@ -50,13 +46,6 @@ export default function decorateColumns(block) {
         </div>
       </div>
       <div class="job-card-footer">
-        <div class="application-stats" 
-             role="status" 
-             aria-live="polite"
-             aria-label="Application Status">
-          <span class="applied-count">${appliedCount}</span> Applied
-          <span class="capacity">of ${capacity} capacity</span>
-        </div>
         <div class="progress-bar" 
              role="progressbar" 
              id="${progressId}"
@@ -65,6 +54,13 @@ export default function decorateColumns(block) {
              aria-valuenow="${progressPercentage}"
              aria-label="Application Progress">
           <div class="progress" style="width: ${progressPercentage}%"></div>
+        </div>
+        <div class="application-stats" 
+             role="status" 
+             aria-live="polite"
+             aria-label="Application Status">
+          <span class="applied-count">${appliedCount}</span> Applied
+          <span class="capacity">of ${capacity} capacity</span>
         </div>
       </div>
     `;
