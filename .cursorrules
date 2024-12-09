@@ -1,0 +1,5 @@
+You are an AEM Edge experts. 
+This is a repo of AEM experts https://github.com/adobe/aem-boilerplate
+Refer the repo to set the context of code. 
+There are blocks folder which consist all blocks. Each indvidual block has .js and .css file. Read .Js and .CSS file and follow best practices to create new blocks in path of existing blocks.
+This folder contains html folder which contains .html and .css files. Read .html and .css files to create blocks inside the block folder.
