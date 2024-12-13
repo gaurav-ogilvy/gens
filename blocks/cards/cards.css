@@ -1,27 +1,26 @@
 /* CSS Custom Properties for Theming */
 :root {
     --img-cards-max-width: 100%;
-    --img-cards-gap: 16px;
-    --img-cards-padding: 0;
-    --img-cards-card-radius: 0;
-    --img-cards-shadow: none;
-    --img-cards-bg: transparent;
-    --img-cards-title-color: #ffffff;
-    --img-cards-text-color: rgba(255, 255, 255, 0.9);
+    --img-cards-gap: 24px;
+    --img-cards-padding: 24px;
+    --img-cards-card-radius: 4px;
+    --img-cards-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    --img-cards-bg: #ffffff;
+    --img-cards-title-color: #202020;
+    --img-cards-text-color: #505050;
     --img-cards-focus-color: #1473E6;
     --img-cards-transition-duration: 0.3s;
-    --img-cards-content-padding: 48px;
-    --img-cards-title-size: 28px;
+    --img-cards-content-padding: 24px;
+    --img-cards-title-size: 20px;
     --img-cards-text-size: 16px;
-    --img-cards-overlay-gradient: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.8) 100%);
-    --img-cards-loading-bg: rgba(0, 0, 0, 0.5);
-    --img-cards-loading-color: rgba(255, 255, 255, 0.9);
+    --img-cards-loading-bg: rgba(0, 0, 0, 0.05);
+    --img-cards-loading-color: rgba(0, 0, 0, 0.7);
 }
 
 /* Container */
 .img-cards-container {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(4, 1fr);
     gap: var(--img-cards-gap);
     width: 100%;
     margin: 0;
@@ -31,11 +30,20 @@
 /* Card Base */
 .img-card {
     position: relative;
+    background: var(--img-cards-bg);
+    border-radius: var(--img-cards-card-radius);
     overflow: hidden;
-    width: 100%;
-    min-height: 680px;
+    box-shadow: var(--img-cards-shadow);
+    transition: transform var(--img-cards-transition-duration) ease,
+        box-shadow var(--img-cards-transition-duration) ease;
     cursor: pointer;
-    background-color: #000;
+    display: flex;
+    flex-direction: column;
+}
+
+.img-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
 }
 
 /* Loading State */
@@ -58,19 +66,11 @@
     color: var(--img-cards-loading-color);
     font-size: var(--img-cards-text-size);
     z-index: 5;
-    background: rgba(0, 0, 0, 0.7);
+    background: rgba(255, 255, 255, 0.9);
     padding: 12px 24px;
     border-radius: 4px;
     white-space: nowrap;
-}
-
-/* Expanded State */
-.img-card[aria-expanded="true"] {
-    outline: 2px solid var(--img-cards-focus-color);
-}
-
-.img-card[aria-expanded="true"] .img-card-cta {
-    text-decoration: underline;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 /* Reduced Motion */
@@ -99,12 +99,9 @@
 
 /* Image Container */
 .img-card-image {
-    position: absolute;
-    top: 0;
-    left: 0;
     width: 100%;
-    height: 100%;
-    z-index: 1;
+    aspect-ratio: 16/9;
+    overflow: hidden;
 }
 
 .img-card-picture {
@@ -118,117 +115,75 @@
     object-fit: cover;
 }
 
-/* Overlay Gradient */
-.img-card::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: var(--img-cards-overlay-gradient);
-    z-index: 2;
-}
-
 /* Content Area */
 .img-card-content {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
     padding: var(--img-cards-content-padding);
-    z-index: 3;
     display: flex;
     flex-direction: column;
     gap: 12px;
-    max-width: 75%;
+    flex-grow: 1;
 }
 
 /* Typography */
 .img-card-title {
     font-size: var(--img-cards-title-size);
-    line-height: 1.2;
-    font-weight: 500;
+    line-height: 1.3;
+    font-weight: 600;
     color: var(--img-cards-title-color);
     margin: 0;
     font-family: 'Adobe Clean', sans-serif;
-    letter-spacing: -0.2px;
 }
 
 .img-card-description {
     font-size: var(--img-cards-text-size);
-    line-height: 1.4;
+    line-height: 1.5;
     color: var(--img-cards-text-color);
     margin: 0;
     font-family: 'Adobe Clean', sans-serif;
-    font-weight: 300;
-    max-width: 90%;
-}
-
-/* Learn More Button */
-.img-card-cta {
-    position: absolute;
-    bottom: var(--img-cards-content-padding);
-    right: var(--img-cards-content-padding);
-    color: var(--img-cards-title-color);
-    text-decoration: none;
-    font-size: 14px;
     font-weight: 400;
-    opacity: 1;
-    transition: opacity var(--img-cards-transition-duration) ease;
-    text-transform: none;
-    letter-spacing: normal;
-}
-
-.img-card-cta:hover {
-    opacity: 0.9;
 }
 
 /* Animation for card appearance */
 .img-card {
     opacity: 0;
-    transition: opacity var(--img-cards-transition-duration) ease;
+    transform: translateY(20px);
+    transition: opacity var(--img-cards-transition-duration) ease,
+        transform var(--img-cards-transition-duration) ease;
 }
 
 .img-card--visible {
     opacity: 1;
+    transform: translateY(0);
 }
 
 /* Responsive Design */
-@media (max-width: 1200px) {
-    :root {
-        --img-cards-content-padding: 40px;
-        --img-cards-title-size: 24px;
-        --img-cards-text-size: 15px;
-    }
-
-    .img-card {
-        min-height: 560px;
-    }
-
-    .img-card-content {
-        max-width: 85%;
+@media (max-width: 1440px) {
+    .img-cards-container {
+        grid-template-columns: repeat(3, 1fr);
     }
 }
 
-@media (max-width: 768px) {
-    :root {
-        --img-cards-content-padding: 32px;
-        --img-cards-title-size: 22px;
-        --img-cards-text-size: 14px;
-        --img-cards-gap: 12px;
+@media (max-width: 1024px) {
+    .img-cards-container {
+        grid-template-columns: repeat(2, 1fr);
     }
 
+    :root {
+        --img-cards-gap: 20px;
+        --img-cards-content-padding: 20px;
+        --img-cards-title-size: 18px;
+        --img-cards-text-size: 15px;
+    }
+}
+
+@media (max-width: 640px) {
     .img-cards-container {
         grid-template-columns: 1fr;
     }
 
-    .img-card {
-        min-height: 480px;
-    }
-
-    .img-card-content {
-        max-width: 100%;
+    :root {
+        --img-cards-gap: 16px;
+        --img-cards-content-padding: 16px;
     }
 }
 
@@ -244,16 +199,6 @@
         margin-bottom: 20px;
         box-shadow: none;
         border: 1px solid #ddd;
-    }
-
-    .img-card::after {
-        display: none;
-    }
-
-    .img-card-content {
-        position: relative;
-        color: #000;
-        text-shadow: none;
     }
 
     .img-card-loading {
