@@ -20,7 +20,12 @@ const DEFAULT_CONFIG = {
 function handleImageError(img) {
     img.src = 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"%3E%3Crect width="100" height="100" fill="%23f0f0f0"/%3E%3Ctext x="50" y="50" text-anchor="middle" alignment-baseline="middle" fill="%23999"%3EImage not found%3C/text%3E%3C/svg%3E';
     img.alt = 'Image failed to load';
-    img.closest('.img-card')?.setAttribute('aria-busy', 'false');
+    const card = img.closest('.img-card');
+    if (card) {
+        card.setAttribute('aria-busy', 'false');
+        const loading = card.querySelector('.img-card-loading');
+        if (loading) loading.remove();
+    }
     console.warn('Image failed to load:', img.src);
 }
 
@@ -60,17 +65,23 @@ function createLoadingIndicator(text) {
  * @param {HTMLElement} card - The card element
  */
 function handleImageLoading(img, card) {
+    // Check if image is already loaded
+    if (img.complete && img.naturalHeight !== 0) {
+        card.setAttribute('aria-busy', 'false');
+        return;
+    }
+
+    // Only show loading state if image is actually loading
     const loading = createLoadingIndicator(DEFAULT_CONFIG.loadingText);
     card.appendChild(loading);
     card.setAttribute('aria-busy', 'true');
 
     img.addEventListener('load', () => {
-        loading.remove();
         card.setAttribute('aria-busy', 'false');
+        loading.remove();
     });
 
     img.addEventListener('error', () => {
-        loading.remove();
         handleImageError(img);
     });
 }
