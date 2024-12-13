@@ -1,47 +1,39 @@
 /* CSS Custom Properties for Theming */
 :root {
-    --img-cards-max-width: 1440px;
-    --img-cards-gap: 32px;
-    --img-cards-padding: 40px;
-    --img-cards-card-radius: 4px;
-    --img-cards-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
-    --img-cards-shadow-hover: 0 4px 8px rgba(0, 0, 0, 0.12);
-    --img-cards-bg: white;
-    --img-cards-title-color: #202020;
-    --img-cards-text-color: #505050;
+    --img-cards-max-width: 100%;
+    --img-cards-gap: 16px;
+    --img-cards-padding: 0;
+    --img-cards-card-radius: 0;
+    --img-cards-shadow: none;
+    --img-cards-bg: transparent;
+    --img-cards-title-color: #ffffff;
+    --img-cards-text-color: rgba(255, 255, 255, 0.9);
     --img-cards-focus-color: #1473E6;
-    --img-cards-transition-duration: 0.2s;
-    --img-cards-content-padding: 24px;
-    --img-cards-title-size: 20px;
+    --img-cards-transition-duration: 0.3s;
+    --img-cards-content-padding: 48px;
+    --img-cards-title-size: 28px;
     --img-cards-text-size: 16px;
+    --img-cards-overlay-gradient: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.8) 100%);
 }
 
 /* Container */
 .img-cards-container {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(2, 1fr);
     gap: var(--img-cards-gap);
-    max-width: var(--img-cards-max-width);
-    margin: 0 auto;
+    width: 100%;
+    margin: 0;
     padding: var(--img-cards-padding);
-    contain: content;
-    /* CSS containment for performance */
 }
 
 /* Card Base */
 .img-card {
-    display: flex;
-    flex-direction: column;
-    background: var(--img-cards-bg);
-    border-radius: var(--img-cards-card-radius);
-    overflow: hidden;
-    box-shadow: var(--img-cards-shadow);
-    transition: transform var(--img-cards-transition-duration) ease,
-        box-shadow var(--img-cards-transition-duration) ease;
-    height: 100%;
     position: relative;
-    contain: content;
-    /* CSS containment for performance */
+    overflow: hidden;
+    width: 100%;
+    min-height: 680px;
+    cursor: pointer;
+    background-color: #000;
 }
 
 /* Reduced Motion */
@@ -57,11 +49,6 @@
     outline-offset: 2px;
 }
 
-.img-card:hover {
-    transform: translateY(-2px);
-    box-shadow: var(--img-cards-shadow-hover);
-}
-
 /* High contrast mode support */
 @media (forced-colors: active) {
     .img-card {
@@ -75,12 +62,12 @@
 
 /* Image Container */
 .img-card-image {
-    position: relative;
-    overflow: hidden;
-    aspect-ratio: 16/9;
-    background: #f8f8f8;
-    contain: strict;
-    /* Strict containment for images */
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
 }
 
 .img-card-picture {
@@ -92,55 +79,126 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
-    will-change: transform;
-    /* Optimize animations */
+}
+
+/* Overlay Gradient */
+.img-card::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: var(--img-cards-overlay-gradient);
+    z-index: 2;
 }
 
 /* Content Area */
 .img-card-content {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
     padding: var(--img-cards-content-padding);
-    flex-grow: 1;
+    z-index: 3;
     display: flex;
     flex-direction: column;
     gap: 12px;
+    max-width: 75%;
 }
 
 /* Typography */
 .img-card-title {
     font-size: var(--img-cards-title-size);
-    line-height: 1.4;
-    font-weight: 600;
+    line-height: 1.2;
+    font-weight: 500;
     color: var(--img-cards-title-color);
     margin: 0;
     font-family: 'Adobe Clean', sans-serif;
+    letter-spacing: -0.2px;
 }
 
 .img-card-description {
     font-size: var(--img-cards-text-size);
-    line-height: 1.6;
+    line-height: 1.4;
     color: var(--img-cards-text-color);
     margin: 0;
     font-family: 'Adobe Clean', sans-serif;
+    font-weight: 300;
+    max-width: 90%;
+}
+
+/* Learn More Button */
+.img-card-cta {
+    position: absolute;
+    bottom: var(--img-cards-content-padding);
+    right: var(--img-cards-content-padding);
+    color: var(--img-cards-title-color);
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 400;
+    opacity: 1;
+    transition: opacity var(--img-cards-transition-duration) ease;
+    text-transform: none;
+    letter-spacing: normal;
+}
+
+.img-card-cta:hover {
+    opacity: 0.9;
 }
 
 /* Animation for card appearance */
 .img-card {
     opacity: 0;
-    transform: translateY(20px);
-    transition: opacity var(--img-cards-transition-duration) ease,
-        transform var(--img-cards-transition-duration) ease;
+    transition: opacity var(--img-cards-transition-duration) ease;
 }
 
 .img-card--visible {
     opacity: 1;
-    transform: translateY(0);
+}
+
+/* Responsive Design */
+@media (max-width: 1200px) {
+    :root {
+        --img-cards-content-padding: 40px;
+        --img-cards-title-size: 24px;
+        --img-cards-text-size: 15px;
+    }
+
+    .img-card {
+        min-height: 560px;
+    }
+
+    .img-card-content {
+        max-width: 85%;
+    }
+}
+
+@media (max-width: 768px) {
+    :root {
+        --img-cards-content-padding: 32px;
+        --img-cards-title-size: 22px;
+        --img-cards-text-size: 14px;
+        --img-cards-gap: 12px;
+    }
+
+    .img-cards-container {
+        grid-template-columns: 1fr;
+    }
+
+    .img-card {
+        min-height: 480px;
+    }
+
+    .img-card-content {
+        max-width: 100%;
+    }
 }
 
 /* Print Styles */
 @media print {
     .img-cards-container {
         display: block;
-        padding: 0;
     }
 
     .img-card {
@@ -151,43 +209,13 @@
         border: 1px solid #ddd;
     }
 
-    .img-card:hover {
-        transform: none;
-        box-shadow: none;
-    }
-}
-
-/* Responsive Design */
-@media (max-width: 1200px) {
-    :root {
-        --img-cards-gap: 24px;
-        --img-cards-padding: 32px;
+    .img-card::after {
+        display: none;
     }
 
-    .img-cards-container {
-        grid-template-columns: repeat(2, 1fr);
-    }
-}
-
-@media (max-width: 768px) {
-    :root {
-        --img-cards-content-padding: 20px;
-        --img-cards-title-size: 18px;
-        --img-cards-text-size: 15px;
-    }
-
-    .img-cards-container {
-        grid-template-columns: 1fr;
-    }
-}
-
-/* Dark Mode Support */
-@media (prefers-color-scheme: dark) {
-    :root {
-        --img-cards-bg: #2d2d2d;
-        --img-cards-title-color: #ffffff;
-        --img-cards-text-color: #cccccc;
-        --img-cards-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-        --img-cards-shadow-hover: 0 4px 8px rgba(0, 0, 0, 0.3);
+    .img-card-content {
+        position: relative;
+        color: #000;
+        text-shadow: none;
     }
 }

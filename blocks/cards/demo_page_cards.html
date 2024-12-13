@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cards Block Demo</title>
+    <link rel="stylesheet" href="cards.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Adobe Clean', sans-serif;
+            background: #1a1a1a;
+            color: white;
+        }
+
+        .demo-container {
+            width: 100%;
+            max-width: 1440px;
+            margin: 0 auto;
+            padding: 24px;
+            box-sizing: border-box;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="demo-container">
+        <div class="cards">
+            <div>
+                <div>
+                    <picture>
+                        <img src="https://picsum.photos/1920/1080?random=1" alt="Dynamic Growth Pipeline">
+                    </picture>
+                </div>
+                <div>
+                    <p><strong>Dynamic Growth Pipeline</strong></p>
+                    <p>Our investment in RWS 2.0 highlights a commitment to value and future growth, aiming to solidify
+                        us as Asia's top tourism destination while ensuring sustainable shareholder returns and
+                        geographical diversification.</p>
+                </div>
+            </div>
+
+            <div>
+                <div>
+                    <picture>
+                        <img src="https://picsum.photos/1920/1080?random=2" alt="Effective Governance & ESG">
+                    </picture>
+                </div>
+                <div>
+                    <p><strong>Effective Governance & ESG</strong></p>
+                    <p>Exceeding industry standards, we are committed to ESG principles, prioritising accountability,
+                        Responsible Gaming, and the Prevention of Money Laundering and Terrorism Financing.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="module">
+        import { default as decorateCards } from './cards.js';
+
+        // Initialize the cards block
+        const cardsBlock = document.querySelector('.cards');
+        if (cardsBlock) {
+            decorateCards(cardsBlock);
+        }
+    </script>
+</body>
+
+</html>

@@ -3,12 +3,13 @@
  * @type {Object}
  */
 const DEFAULT_CONFIG = {
-    lazyLoadThreshold: 2, // Number of cards to load eagerly
-    animationDuration: '0.2s',
+    lazyLoadThreshold: 2,
+    animationDuration: '0.3s',
     observerRootMargin: '50px',
     cardSelector: '.img-card',
     titleSelector: '.img-card-title',
-    descriptionSelector: '.img-card-description'
+    descriptionSelector: '.img-card-description',
+    ctaText: 'Learn more'
 };
 
 /**
@@ -19,6 +20,21 @@ function handleImageError(img) {
     img.src = 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"%3E%3Crect width="100" height="100" fill="%23f0f0f0"/%3E%3Ctext x="50" y="50" text-anchor="middle" alignment-baseline="middle" fill="%23999"%3EImage not found%3C/text%3E%3C/svg%3E';
     img.alt = 'Image failed to load';
     console.warn('Image failed to load:', img.src);
+}
+
+/**
+ * Creates a learn more button element
+ * @param {string} text - The button text
+ * @returns {HTMLAnchorElement}
+ */
+function createLearnMoreButton(text) {
+    const button = document.createElement('a');
+    button.href = '#';
+    button.className = 'img-card-cta';
+    button.textContent = text;
+    button.setAttribute('role', 'button');
+    button.setAttribute('aria-label', text);
+    return button;
 }
 
 /**
@@ -34,7 +50,6 @@ export default function decorate(block, config = {}) {
     block.classList.add('img-cards-container');
     block.setAttribute('role', 'region');
     block.setAttribute('aria-label', 'Feature Cards');
-    block.setAttribute('role', 'list'); // For better screen reader experience
 
     // Add reduced motion check
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -46,7 +61,7 @@ export default function decorate(block, config = {}) {
             // Add classes and make card focusable
             card.classList.add('img-card');
             card.setAttribute('tabindex', '0');
-            card.setAttribute('role', 'listitem');
+            card.setAttribute('role', 'article');
             card.setAttribute('aria-label', `Card ${index + 1} of ${cards.length}`);
 
             // Get the image and content divs
@@ -99,31 +114,18 @@ export default function decorate(block, config = {}) {
                         p.classList.add('img-card-description');
                     }
                 });
+
+                // Add learn more button
+                const learnMoreButton = createLearnMoreButton(options.ctaText);
+                contentDiv.appendChild(learnMoreButton);
             }
 
             // Add keyboard interaction
             card.addEventListener('keydown', (e) => {
                 if (e.key === 'Enter' || e.key === ' ') {
                     e.preventDefault();
-                    card.click();
-                }
-            });
-
-            // Announce card content to screen readers
-            card.addEventListener('focus', () => {
-                const title = card.querySelector(options.titleSelector);
-                const description = card.querySelector(options.descriptionSelector);
-                if (title && description) {
-                    const announcement = `${title.textContent}. ${description.textContent}`;
-                    const liveRegion = document.createElement('div');
-                    liveRegion.setAttribute('aria-live', 'polite');
-                    liveRegion.style.position = 'absolute';
-                    liveRegion.style.clip = 'rect(0 0 0 0)';
-                    document.body.appendChild(liveRegion);
-                    setTimeout(() => {
-                        liveRegion.textContent = announcement;
-                        setTimeout(() => liveRegion.remove(), 1000);
-                    }, 100);
+                    const cta = card.querySelector('.img-card-cta');
+                    if (cta) cta.click();
                 }
             });
 
