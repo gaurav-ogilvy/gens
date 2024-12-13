@@ -9,7 +9,8 @@ const DEFAULT_CONFIG = {
     cardSelector: '.img-card',
     titleSelector: '.img-card-title',
     descriptionSelector: '.img-card-description',
-    ctaText: 'Learn more'
+    ctaText: 'Learn more',
+    loadingText: 'Loading image...'
 };
 
 /**
@@ -19,6 +20,7 @@ const DEFAULT_CONFIG = {
 function handleImageError(img) {
     img.src = 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"%3E%3Crect width="100" height="100" fill="%23f0f0f0"/%3E%3Ctext x="50" y="50" text-anchor="middle" alignment-baseline="middle" fill="%23999"%3EImage not found%3C/text%3E%3C/svg%3E';
     img.alt = 'Image failed to load';
+    img.closest('.img-card')?.setAttribute('aria-busy', 'false');
     console.warn('Image failed to load:', img.src);
 }
 
@@ -34,7 +36,43 @@ function createLearnMoreButton(text) {
     button.textContent = text;
     button.setAttribute('role', 'button');
     button.setAttribute('aria-label', text);
+    button.setAttribute('aria-expanded', 'false');
     return button;
+}
+
+/**
+ * Creates a loading indicator element
+ * @param {string} text - The loading text
+ * @returns {HTMLDivElement}
+ */
+function createLoadingIndicator(text) {
+    const loading = document.createElement('div');
+    loading.className = 'img-card-loading';
+    loading.setAttribute('role', 'status');
+    loading.setAttribute('aria-live', 'polite');
+    loading.textContent = text;
+    return loading;
+}
+
+/**
+ * Handles image loading state
+ * @param {HTMLImageElement} img - The image element
+ * @param {HTMLElement} card - The card element
+ */
+function handleImageLoading(img, card) {
+    const loading = createLoadingIndicator(DEFAULT_CONFIG.loadingText);
+    card.appendChild(loading);
+    card.setAttribute('aria-busy', 'true');
+
+    img.addEventListener('load', () => {
+        loading.remove();
+        card.setAttribute('aria-busy', 'false');
+    });
+
+    img.addEventListener('error', () => {
+        loading.remove();
+        handleImageError(img);
+    });
 }
 
 /**
@@ -63,6 +101,7 @@ export default function decorate(block, config = {}) {
             card.setAttribute('tabindex', '0');
             card.setAttribute('role', 'article');
             card.setAttribute('aria-label', `Card ${index + 1} of ${cards.length}`);
+            card.setAttribute('aria-expanded', 'false');
 
             // Get the image and content divs
             const [imageDiv, contentDiv] = card.children;
@@ -85,8 +124,8 @@ export default function decorate(block, config = {}) {
                         }
                         // Add decoding attribute for performance
                         img.setAttribute('decoding', 'async');
-                        // Add error handling
-                        img.addEventListener('error', () => handleImageError(img));
+                        // Add loading state handling
+                        handleImageLoading(img, card);
                     }
                 }
             }
@@ -118,6 +157,14 @@ export default function decorate(block, config = {}) {
                 // Add learn more button
                 const learnMoreButton = createLearnMoreButton(options.ctaText);
                 contentDiv.appendChild(learnMoreButton);
+
+                // Add interaction handling
+                learnMoreButton.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const expanded = learnMoreButton.getAttribute('aria-expanded') === 'true';
+                    learnMoreButton.setAttribute('aria-expanded', (!expanded).toString());
+                    card.setAttribute('aria-expanded', (!expanded).toString());
+                });
             }
 
             // Add keyboard interaction

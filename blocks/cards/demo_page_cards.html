@@ -31,7 +31,13 @@
             <div>
                 <div>
                     <picture>
-                        <img src="https://picsum.photos/1920/1080?random=1" alt="Dynamic Growth Pipeline">
+                        <source media="(min-width: 1200px)" srcset="https://picsum.photos/1920/1080?random=1 1920w,
+                                        https://picsum.photos/1440/810?random=1 1440w"
+                            sizes="(min-width: 1440px) 720px, 50vw">
+                        <source media="(min-width: 768px)" srcset="https://picsum.photos/1200/675?random=1 1200w,
+                                        https://picsum.photos/960/540?random=1 960w" sizes="100vw">
+                        <img src="https://picsum.photos/640/360?random=1" alt="Dynamic Growth Pipeline" width="1920"
+                            height="1080" loading="lazy" decoding="async">
                     </picture>
                 </div>
                 <div>
@@ -45,7 +51,13 @@
             <div>
                 <div>
                     <picture>
-                        <img src="https://picsum.photos/1920/1080?random=2" alt="Effective Governance & ESG">
+                        <source media="(min-width: 1200px)" srcset="https://picsum.photos/1920/1080?random=2 1920w,
+                                        https://picsum.photos/1440/810?random=2 1440w"
+                            sizes="(min-width: 1440px) 720px, 50vw">
+                        <source media="(min-width: 768px)" srcset="https://picsum.photos/1200/675?random=2 1200w,
+                                        https://picsum.photos/960/540?random=2 960w" sizes="100vw">
+                        <img src="https://picsum.photos/640/360?random=2" alt="Effective Governance & ESG" width="1920"
+                            height="1080" loading="lazy" decoding="async">
                     </picture>
                 </div>
                 <div>
