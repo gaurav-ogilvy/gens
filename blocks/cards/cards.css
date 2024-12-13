@@ -23,8 +23,10 @@
     grid-template-columns: repeat(4, 1fr);
     gap: var(--img-cards-gap);
     width: 100%;
-    margin: 0;
+    max-width: 1440px;
+    margin: 0 auto;
     padding: var(--img-cards-padding);
+    box-sizing: border-box;
 }
 
 /* Card Base */
@@ -157,7 +159,7 @@
 }
 
 /* Responsive Design */
-@media (max-width: 1440px) {
+@media (max-width: 1200px) {
     .img-cards-container {
         grid-template-columns: repeat(3, 1fr);
     }
